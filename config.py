@@ -25,21 +25,28 @@ SURROUND_FORMAT = "7.1"  # Options: "stereo", "5.1", or "7.1"
                          # 7.1 = 8 channels: L, R, C, LFE, LS, RS, LB, RB
 
 # Device Selection (None = show device list at startup)
-# Run 'python audio_io.py' to list available WASAPI devices and get their IDs
+# Run 'python main.py' and select option 5 to list available WASAPI devices
 #
-# ⚠ WARNING: Device IDs may change when audio devices are added/removed!
-# For reliability, use device name strings instead of IDs:
+# ⚠ IMPORTANT:
+# 1. Device IDs may change when audio devices are added/removed!
+# 2. Some device names exist in multiple APIs (MME, DirectSound, WASAPI)
+# 3. Include ", Windows WASAPI" to ensure you get the WASAPI device
 #
-# Examples using device names (recommended):
-#   INPUT_DEVICE = "CABLE Output"  # Substring match works
-#   OUTPUT_DEVICE = "Speakers (Realtek High Definition Audio)"
+# Recommended format (full name with API):
+#   INPUT_DEVICE = "Device Name, Windows WASAPI"
 #
-# Examples using device IDs (may change):
-#   INPUT_DEVICE = 27
-#   OUTPUT_DEVICE = 23
+# Examples:
+#   INPUT_DEVICE = "CABLE Output (VB-Audio Virtual Cable), Windows WASAPI"
+#   OUTPUT_DEVICE = "Speakers (Realtek(R) Audio), Windows WASAPI"
 #
-INPUT_DEVICE = None   # Set to device ID (int), device name (str), or None
-OUTPUT_DEVICE = None  # Set to device ID (int), device name (str), or None
+# ⚠ If you get "Multiple devices found" error:
+#   Add ", Windows WASAPI" to the end of your device name
+#
+# Avoid device IDs (they change when devices are added/removed):
+#   INPUT_DEVICE = 27  # Not recommended
+#
+INPUT_DEVICE = None   # Set to device name (str), device ID (int), or None
+OUTPUT_DEVICE = None  # Set to device name (str), device ID (int), or None
 
 # Rotation Settings
 SMOOTHING_FACTOR = 0.85  # 0-1, higher = smoother but more lag

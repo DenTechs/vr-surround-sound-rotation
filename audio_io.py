@@ -56,6 +56,11 @@ class AudioIO:
                 continue
 
             wasapi_found = True
+
+            # Build the full device name including API (for disambiguation)
+            # This is what sounddevice uses internally
+            full_name = f"{device['name']}, {hostapi_name}"
+
             markers = []
             if in_ch >= 2:
                 markers.append(f"IN:{in_ch}")
@@ -64,11 +69,9 @@ class AudioIO:
             elif out_ch > 0:
                 markers.append(f"OUT:{out_ch}")
 
-            markers.append("WASAPI")
-
             marker_str = f" [{', '.join(markers)}]" if markers else ""
 
-            print(f"[{i}] {device['name']}{marker_str}")
+            print(f'[{i}] "{full_name}"{marker_str}')
 
         if not wasapi_found:
             print("\n⚠ No WASAPI devices found!")
@@ -97,11 +100,16 @@ class AudioIO:
             print("If you see MME/DirectSound devices, try updating audio drivers.")
 
         print("\n" + "="*70)
-        print("⚠ WARNING: Device IDs may change when devices are plugged/unplugged!")
-        print("For reliability, use device names (strings) instead of IDs in config.py")
+        print("⚠ IMPORTANT:")
+        print("1. Device IDs may change when devices are plugged/unplugged!")
+        print("2. Use full device name (with API) to avoid ambiguity")
+        print("\nRecommended format in config.py:")
+        print('  INPUT_DEVICE = "Device Name, Windows WASAPI"')
         print("\nExamples:")
-        print('  INPUT_DEVICE = "Speakers (VB-Audio Virtual Cable)"  # Recommended: use name')
-        print("  INPUT_DEVICE = 27              # May change when devices added/removed")
+        print('  INPUT_DEVICE = "CABLE Output (VB-Audio Virtual Cable), Windows WASAPI"')
+        print('  OUTPUT_DEVICE = "Speakers (Realtek(R) Audio), Windows WASAPI"')
+        print("\nAvoid device IDs (they may change):")
+        print("  INPUT_DEVICE = 27  # Not recommended")
         print("="*70)
 
     def get_device_info(self, device_id):

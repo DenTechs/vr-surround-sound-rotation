@@ -52,14 +52,16 @@ This shows WASAPI devices with their capabilities:
 
 **Edit `config.py`** with your devices:
 
-⚠ **Important:** Device IDs can change when audio devices are plugged/unplugged. Use device **names** (strings) for reliability:
+⚠ **Important:**
+1. Device IDs can change when audio devices are plugged/unplugged
+2. Include ", Windows WASAPI" to avoid ambiguity (some devices have MME/DirectSound/WASAPI versions)
 
 ```python
-# Recommended: Use device names (strings)
-INPUT_DEVICE = "CABLE Output"  # Substring matching works
-OUTPUT_DEVICE = "Speakers (Realtek High Definition Audio)"
+# Recommended: Use full device name with API (copy from device list)
+INPUT_DEVICE = "CABLE Output (VB-Audio Virtual Cable), Windows WASAPI"
+OUTPUT_DEVICE = "Speakers (Realtek High Definition Audio), Windows WASAPI"
 
-# Alternative: Use device IDs (may change when devices added/removed)
+# Alternative: Use device IDs (NOT recommended - they change!)
 INPUT_DEVICE = 27
 OUTPUT_DEVICE = 23
 ```
@@ -184,6 +186,20 @@ Set `SURROUND_FORMAT` in `config.py`.
 - Verify INPUT_DEVICE has input channels
 - Verify OUTPUT_DEVICE has 6 or 8 output channels
 - **Device IDs changed?** This happens when devices are added/removed. Use device names (strings) instead of IDs for reliability
+
+### "Multiple input/output devices found for..."
+**Cause**: Your device name matches multiple devices with different APIs (MME, DirectSound, WASAPI)
+
+**Solution**: Include the API type in your device name:
+```python
+# Before (ambiguous):
+INPUT_DEVICE = "Speakers (Realtek Audio)"
+
+# After (specific):
+INPUT_DEVICE = "Speakers (Realtek Audio), Windows WASAPI"
+```
+
+Run `python main.py` → option 5 to see the full device names with API suffixes, then copy the exact string.
 
 ### High Latency
 - Decrease `BLOCK_SIZE` in config.py (try 256 or 128)

@@ -18,8 +18,15 @@ Game Audio Output → Virtual Audio Device → This Program → 5.1/7.1 Physical
 ```bash
 pip install -r requirements.txt
 ```
+### 2. Set Up Surround Sound Device
 
-### 2. Set Up Virtual Audio Device
+Make sure your surround sound ouput is set up properly set up in Windows
+
+1. Go to Windows Settings > System > Sound > More Sound Settings
+2. Select your surround sound device and choose "Configure" at the bottom left
+3. Set the speaker configuration thats appropriate for your setup
+
+### 3. Set Up Virtual Audio Device
 
 You need a virtual audio device to route game audio to the program:
 
@@ -38,7 +45,7 @@ You need a virtual audio device to route game audio to the program:
 1. Download from https://vb-audio.com/Voicemeeter/
 2. Route game audio through Voicemeeter virtual outputs
 
-### 3. Configure Audio Devices
+### 4. Configure Audio Devices
 
 **Find your device IDs/names:**
 ```bash
@@ -66,7 +73,7 @@ INPUT_DEVICE = 27
 OUTPUT_DEVICE = 23
 ```
 
-### 4. Run the Program
+### 5. Run the Program
 
 ```bash
 python main.py

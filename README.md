@@ -20,7 +20,7 @@ pip install -r requirements.txt
 ```
 ### 2. Set Up Surround Sound Device
 
-Make sure your surround sound ouput is set up properly set up in Windows
+Make sure your surround sound ouput is set up properly in Windows
 
 1. Go to Windows Settings > System > Sound > More Sound Settings
 2. Select your surround sound device and choose "Configure" at the bottom left
